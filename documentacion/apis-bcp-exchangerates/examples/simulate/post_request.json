@@ -1,0 +1,18 @@
+{
+  "baseAmount": {
+    "currency": "PEN",
+    "amount": 300.5
+  },
+  "targetCurrencies": [
+    {
+      "currency": "USD"
+    },
+    {
+      "currency": "EUR"
+    }
+  ],
+  "exchangeRate": {
+    "action": "FIXING_BUY"
+  },
+  "origin": "VISA"
+}

@@ -1,0 +1,74 @@
+#%RAML 1.0 Library
+uses:
+  annotations: ../../glapi-global-apis-commons-commons/annotations/annotationsLibrary.raml
+
+types:
+  targetCurrency:
+    type: object
+    properties:
+      id:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "NONE"
+            output: "REQUIRED"
+          - method: "GET"
+            input: "NONE"
+            output: "REQUIRED"
+        type: Integer
+        description: |
+          String based on ISO-4217 for specifying the target currency.
+        required: false
+      lastExchangeUpdate:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "REQUIRED"
+            output: "REQUIRED"
+          - method: "GET"
+            input: "NONE"
+            output: "REQUIRED"
+        type: date-only
+        description: |
+          String based on ISO-8601 date format for specifying the date of the last update of the exchange rate.
+        required: false
+      exchangeRates:
+        (annotations.bindingDefinition):
+          - method: "GET"
+            input: "NONE"
+            output: "REQUIRED"
+          - method: "GET"
+            input: "NONE"
+            output: "REQUIRED"
+        type: array
+        description: |
+          Listing with the possible types of changes for a certain currency destination on a currency origin.
+        required: false
+        items:
+          properties:
+            action:
+              (annotations.bindingDefinition):
+                - method: "POST"
+                  input: "REQUIRED"
+                  output: "REQUIRED"
+                - method: "GET"
+                  input: "NONE"
+                  output: "REQUIRED"
+              type: string
+              enum: [FIXING_BUY, FIXING_SELL]
+              (annotations.enumDescription):
+                - FIXING_BUY: The type of exchange that generated the value is a currency purchase.
+                - FIXING_SELL: The type of exchange that generated the value is a currency sale.
+              description: |
+                Exchange type for the value for this exchange rate.
+              required: false
+            value:
+              (annotations.bindingDefinition):
+                - method: "POST"
+                  input: "REQUIRED"
+                  output: "REQUIRED"
+                - method: "GET"
+                  input: "NONE"
+                  output: "REQUIRED"
+              type: number
+              description: |
+                  Value of the exchange for purchase or sale. According to the exchange type this value should be associated as a magnitude of the base currency for sale or exchange currency for purchase.
+              required: false

@@ -1,0 +1,61 @@
+#%RAML 1.0 Library
+uses:
+  annotations: ../../glapi-global-apis-commons-commons/annotations/annotationsLibrary.raml
+  baseCurrency: baseCurrency.raml
+  targetCurrency: targetCurrency.raml
+types:
+  createExchangeRate:
+    type: object
+    properties:
+      id:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "NONE"
+            output: "REQUIRED"
+          - method: "GET"
+            input: "NONE"
+            output: "REQUIRED"
+        type: string
+        required: false
+        description: |
+          Exchange rate identifier.
+      baseCurrency:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "REQUIRED"
+            output: "REQUIRED"
+          - method: "GET"
+            input: "NONE"
+            output: "REQUIRED"
+        type: baseCurrency.baseCurrency
+        required: false
+        description: |
+          Base currency.
+      targetCurrencies:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "REQUIRED"
+            output: "REQUIRED"
+          - method: "GET"
+            input: "NONE"
+            output: "REQUIRED"
+        type: targetCurrency.targetCurrency[]
+        description: |
+          List of exchange rates for a particular target currency.
+        required: false
+      origin:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "OPTIONAL"
+            output: "OPTIONAL"
+          - method: "GET"
+            input: "NONE"
+            output: "OPTIONAL"
+        enum: [VISA, MASTERCARD, BLOOMBERG]
+        (annotations.enumDescription):
+          - VISA: Visa.
+          - MASTERCARD: Mastercard.
+        description: |
+          Origin of the conversion (responsible for facilitating the exchange rate).
+        required: false
+

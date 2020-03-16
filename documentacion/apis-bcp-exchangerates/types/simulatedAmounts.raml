@@ -1,0 +1,87 @@
+#%RAML 1.0 Library
+
+uses:
+  annotations: ../../glapi-global-apis-commons-commons/annotations/annotationsLibrary.raml
+
+types:
+  simulatedAmounts:
+    type: array
+    items:
+      properties:
+        exchangeRate:
+          (annotations.bindingDefinition):
+            - method: "POST"
+              input: "NONE"
+              output: "REQUIRED"
+          type: object
+          required: false
+          description: |
+            Type of change applied in the conversion.
+          properties:
+            action:
+              (annotations.bindingDefinition):
+                - method: "POST"
+                  input: "NONE"
+                  output: "REQUIRED"
+              type: string
+              enum: ["FIXING_BUY","FIXING_SELL"]
+              required: false
+              (annotations.enumDescription):
+                - FIXING_BUY: The type of exchange is a currency purchase.
+                - FIXING_SELL: The type of exchange is a currency sale.
+              description: |
+                Exchange rate identifier.
+            value:
+              (annotations.bindingDefinition):
+                - method: "POST"
+                  input: "NONE"
+                  output: "REQUIRED"
+              type: number
+              required: false
+              description: |
+                Value of the exchange rate.
+        currency:
+          (annotations.bindingDefinition):
+            - method: "POST"
+              input: "NONE"
+              output: "REQUIRED"
+          type: string
+          required: false
+          description: |
+            String based on ISO-4217 for specifying the currency destiny of the operation.
+        netAmount:
+          (annotations.bindingDefinition):
+            - method: "POST"
+              input: "NONE"
+              output: "REQUIRED"
+          type: number
+          required: false
+          description: |
+            Net amount of currency conversion.
+        feeAmount:
+          (annotations.bindingDefinition):
+            - method: "POST"
+              input: "NONE"
+              output: "REQUIRED"
+          type: number
+          required: false
+          description: |
+            Amount of the commission added by the operation.
+        totalAmount:
+          (annotations.bindingDefinition):
+            - method: "POST"
+              input: "NONE"
+              output: "REQUIRED"
+          type: number
+          required: false
+          description: |
+            Total amount of the operation.
+        lastExchangeUpdate:
+          (annotations.bindingDefinition):
+            - method: "POST"
+              input: "NONE"
+              output: "OPTIONAL"
+          type: date-only
+          required: false
+          description: |
+            String based on ISO-8601 date format for specifying the date of the last update of the exchange rate.

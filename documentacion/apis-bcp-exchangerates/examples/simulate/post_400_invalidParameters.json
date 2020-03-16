@@ -1,0 +1,9 @@
+{
+  "messages": [
+    {
+      "code": "invalidParameters",
+      "message" : "Invalid Parameters",
+      "type" : "ERROR"
+    }
+  ]
+}

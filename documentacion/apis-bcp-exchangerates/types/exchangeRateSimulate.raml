@@ -1,0 +1,87 @@
+#%RAML 1.0 Library
+uses:
+  annotations: ../../glapi-global-apis-commons-commons/annotations/annotationsLibrary.raml
+
+  simulatedAmounts: simulatedAmounts.raml
+  import: import.raml
+
+types:
+  exchangeRateSimulate:
+    type: object
+    properties:
+      baseAmount:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "REQUIRED"
+            output: "REQUIRED"
+        type: import.import
+        description: |
+          Base amount in the currency exchange.
+        required: true
+      targetCurrencies:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "REQUIRED"
+            output: "NONE"
+        type: array
+        required: false
+        description: |
+          List of currencies destiny of the conversion. This list must be an array of currency codes (ISO code).
+        items:
+          properties:
+            currency:
+              (annotations.bindingDefinition):
+                - method: "POST"
+                  input: "REQUIRED"
+                  output: "NONE"
+              type: string
+              required: false
+              description: |
+                String based on ISO-4217 for specifying the currency.
+      exchangeRate:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "OPTIONAL"
+            output: "NONE"
+        type: object
+        required: false
+        description: |
+          Relationship of the exchange rate.
+        properties:
+          id:
+            (annotations.bindingDefinition):
+              - method: "POST"
+                input: "REQUIRED"
+                output: "NONE"
+            type: string
+            enum: [FIXING_BUY, FIXING_SELL]
+            required: false
+            (annotations.enumDescription):
+              - FIXING_BUY: The type of exchange is a currency purchase.
+              - FIXING_SELL: The type of exchange is a currency sale.
+            description: |
+              Exchange rate identifier.
+            example: FIXING_BUY
+      origin:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "OPTIONAL"
+            output: "OPTIONAL"
+        type: string
+        description: |
+          Origin of the conversion (responsible for facilitating the ratios).
+        required: false
+        example: VISA
+        enum: [VISA, MASTERCARD]
+        (annotations.enumDescription):
+          - VISA: Visa.
+          - MASTERCARD: Mastercard.
+      targetAmounts:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "NONE"
+            output: "REQUIRED"
+        type: simulatedAmounts.simulatedAmounts
+        description: |
+          List with the amounts associated with each of the chosen destination currencies.
+        required: false

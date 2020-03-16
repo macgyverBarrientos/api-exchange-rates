@@ -1,0 +1,9 @@
+{
+  "messages": [
+    {
+      "code": "noAvailableRate",
+      "message": "No rates available for provided currency.",
+      "type": "ERROR"
+    }
+  ]
+}

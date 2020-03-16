@@ -1,0 +1,195 @@
+#%RAML 1.0 Library
+uses:
+  annotations: ../../glapi-global-apis-commons-commons/annotations/annotationsLibrary.raml
+
+  sender: sender.raml
+  receiver: receiver.raml
+  sentMoney: sentMoney.raml
+  preferenceRate: preferenceRate.raml
+  fees: fees.raml
+  referenceMoney: referenceMoney.raml
+  identityDocument: identityDocument.raml
+  operation: operation.raml
+  quoteResult: quoteResult.raml
+  references: references.raml
+  branch: branch.raml
+  baseRateCalculate: baseRateCalculate.raml
+
+types:
+  exchangeRate:
+    type: object
+    properties:
+      targetUserId:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "OPTIONAL"
+            output: "NONE"
+        type: string
+        required: false
+        description: |
+          The customer identification number may be indicated through this input param
+        (annotations.countryException):
+          - country: MX
+            description: This attribute is not implemented in Mexico.
+      sender:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "OPTIONAL"
+            output: "OPTIONAL"
+        type: sender.sender
+        description: |
+          Sender of contract number. Represents information about the origin of the transfer.
+        required: false
+        (annotations.countryException):
+          - country: MX
+            description: This attribute is required in Mexico.
+      receiver:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "OPTIONAL"
+            output: "OPTIONAL"
+        type: receiver.receiver
+        description: |
+          Receiver of the transfer. Represents information about the destination of the transfer.
+        required: false
+        (annotations.countryException):
+          - country: MX
+            description: This attribute is required in Mexico.
+      branch:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "OPTIONAL"
+            output: "OPTIONAL"
+        type: branch.branch
+        description: |
+          Office of the bank to which the cashier belongs.
+        required: false
+      identityDocument:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "OPTIONAL"
+            output: "OPTIONAL"
+        type: identityDocument.identityDocument
+        description: |
+          Identity document of the person or customer that requires the quotation.
+        required: false
+        (annotations.countryException):
+          - country: MX
+            description: This attribute is not implemented in Mexico.
+      operation:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "OPTIONAL"
+            output: "OPTIONAL"
+        type: operation.operation
+        description: |
+          Financial operation in which the preferential exchange rate is applied.
+        required: false
+        (annotations.countryException):
+          - country: MX
+            description: This attribute is required in Mexico.
+      sentMoney:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "REQUIRED"
+            output: "REQUIRED"
+        type: sentMoney.sentMoney
+        description: |
+          Amount used in the financial operation.
+        required: false
+      preferenceRate:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "NONE"
+            output: "REQUIRED"
+        type: preferenceRate.preferenceRate
+        description: |
+          Is the exchange rate that will be applied in the financial operation.
+        required: false
+      referenceMoney:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "NONE"
+            output: "OPTIONAL"
+        type: referenceMoney.referenceMoney
+        description: |
+          Amount represented in the current currency of the market and is used in an informative way.
+        required: false
+        (annotations.countryException):
+          - country: MX
+            description: This attribute is not implemented in Mexico.
+      baseRate:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "NONE"
+            output: "OPTIONAL"
+        type: baseRateCalculate.baseRateCalculate
+        description: |
+          Internal base rate information with no spread applied. This is the financial institution internal rate which does not contain customer spread margin.
+        required: false
+      creationDate:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "NONE"
+            output: "REQUIRED"
+        type: datetime
+        description: |
+          Date of the exchange rate was created. String based on ISO-8601 date format.
+        required: false
+      valueDate:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "NONE"
+            output: "OPTIONAL"
+        type: datetime
+        description: |
+          Value Date when funds should be transferred between the origin Financial Institution and the destination Financial Institution.
+        required: false
+        (annotations.countryException):
+          - country: MX
+            description: This attribute is not implemented in Mexico.
+      availabilityDate:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "NONE"
+            output: "OPTIONAL"
+        type: datetime
+        description: |
+          Date when transaction receiver should receive the operation funds.
+        required: false
+        (annotations.countryException):
+          - country: MX
+            description: This attribute is not implemented in Mexico.
+      quoteResult:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "NONE"
+            output: "OPTIONAL"
+        type: quoteResult.quoteResult
+        description: |
+          Represents the difference of the market exchange rate against the preferential exchange rate offered.
+        required: false
+        (annotations.countryException):
+          - country: MX
+            description: This attribute is not implemented in Mexico.
+      references:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "NONE"
+            output: "OPTIONAL"
+        type: references.references
+        description: |
+          Reflecting a reference information that is associated with an operation.
+        required: false 
+      fees:
+        (annotations.bindingDefinition):
+          - method: "POST"
+            input: "NONE"
+            output: "OPTIONAL"
+        type: fees.fees
+        description: |
+          Fees associated with the operation.
+        required: false
+        (annotations.countryException):
+          - country: MX
+            description: This attribute is not implemented in Mexico.

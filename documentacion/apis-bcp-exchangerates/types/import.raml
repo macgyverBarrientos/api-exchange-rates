@@ -1,0 +1,32 @@
+#%RAML 1.0 Library
+uses:
+  annotations: ../../glapi-global-apis-commons-commons/annotations/annotationsLibrary.raml
+
+types:
+  import:
+    type: object
+    properties:
+      amount:
+        (annotations.bindingDefinition):
+          - method: GET
+            input: NONE
+            output: REQUIRED
+          - method: POST
+            input: REQUIRED
+            output: REQUIRED
+        type: number
+        required: false
+        description: |
+          Monetary amount.
+      currency:
+        (annotations.bindingDefinition):
+          - method: GET
+            input: NONE
+            output: REQUIRED
+          - method: POST
+            input: REQUIRED
+            output: REQUIRED
+        type: string
+        required: false
+        description: |
+          String based on ISO-4217 for specifying the currency related to the amount.

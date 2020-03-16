@@ -1,0 +1,33 @@
+{
+  "data": {
+    "baseAmount": {
+      "currency": "PEN",
+      "amount": 300.5
+    },
+    "origin": "VISA",
+    "targetAmounts": [
+      {
+        "exchangeRate": {
+          "action": "FIXING_BUY",
+          "value": 0.22
+        },
+        "currency": "EUR",
+        "netAmount": 66.11,
+        "feeAmount": 10.5175,
+        "totalAmount": 55.5925,
+        "lastExchangeUpdate": "2014-06-14 13:13:13"
+      },
+      {
+        "exchangeRate": {
+          "action": "FIXING_BUY",
+          "value": 0.29
+        },
+        "currency": "USD",
+        "netAmount": 87.145,
+        "feeAmount": 9.015,
+        "totalAmount": 78.13,
+        "lastExchangeUpdate": "2014-06-14 13:13:13"
+      }
+    ]
+  }
+}

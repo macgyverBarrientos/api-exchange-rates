@@ -1,0 +1,36 @@
+{
+  "baseCurrency": {
+    "currency": "EUR"
+  },
+  "origin": "VISA",
+  "targetCurrencies": [
+    {
+      "currency": "USD",
+      "lastExchangeUpdate": "2014-06-14 13:13:13",
+      "exchangeRates": [
+        {
+          "action": "FIXING_BUY",
+          "value": 1.10578
+        },
+        {
+          "action": "FIXING_SELL",
+          "value": 0.92367
+        }
+      ]
+    },
+    {
+      "currency": "PEN",
+      "lastExchangeUpdate": "2014-06-14 13:13:13",
+      "exchangeRates": [
+        {
+          "action": "FIXING_BUY",
+          "value": 4.454
+        },
+        {
+          "action": "FIXING_SELL",
+          "value": 4.505
+        }
+      ]
+    }
+  ]
+}

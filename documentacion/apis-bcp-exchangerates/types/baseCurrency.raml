@@ -1,0 +1,18 @@
+#%RAML 1.0 Library
+uses:
+  annotations: ../../glapi-global-apis-commons-commons/annotations/annotationsLibrary.raml
+  import: import.raml
+
+types:
+  baseCurrency:
+    type: object
+    properties:
+      currency:
+        (annotations.bindingDefinition):
+         - method: "POST"
+           input: "REQUIRED"
+           output: REQUIRED
+        type: String
+        required: false
+        description: |
+          Currency base.

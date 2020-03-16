@@ -1,0 +1,161 @@
+#%RAML 1.0
+title: Exchange Rates
+version: v0.1.0
+description: !include docs/apiDescription.md
+baseUri: https://www.bcp.com/exchange-rates/v0
+
+uses:
+  exchangeRates: types/exchangeRates.raml
+  createExchangeRate: types/createExchangeRate.raml
+  exchangeRateSimulate: types/exchangeRateSimulate.raml
+
+annotationTypes:
+  exampleInput: !include ../glapi-global-apis-commons-commons/annotations/exampleInput.raml
+  enumDescription: !include ../glapi-global-apis-commons-commons/annotations/enumDescription.raml
+
+resourceTypes:
+  collection: !include ../glapi-global-apis-commons-commons/resourceTypes/collection.raml
+  collection-item: !include ../glapi-global-apis-commons-commons/resourceTypes/collection-item.raml
+  subresource-collection: !include ../glapi-global-apis-commons-commons/resourceTypes/subresource-collection.raml
+  consulting-post: !include ../glapi-global-apis-commons-commons/resourceTypes/consulting-post.raml
+
+types:
+  errors: !include ../glapi-global-apis-commons-commons/types/errors.raml
+
+
+/exchange-rates:
+  description: |
+    It allows obtaining all the exchange ratios of all available currencies with respect to the base currency. It is necessary to filter by base currency and it is also possible to filter by exchange rate.
+  type: collection
+  get:
+    description: |
+      It retrieves the list of currencies that belongs to each exchange operation.
+    queryParameters:
+      baseCurrency.currency:
+        description: Filter the result only for the chosen base currency. String based on ISO-4217.
+        type: string
+        required: true
+        example: "UYU"
+      targetCurrency.exchangeRate.action:
+        description: Allows filtering by one or more exchange rates trades.
+        type: string
+        enum: [FIXING_BUY, FIXING_SELL]
+        (enumDescription):
+          - FIXING_BUY: Fixing buy.
+          - FIXING_SELL: Fixing sell.
+        required: false
+        example: FIXING_BUY
+      origin:
+        description: Origin of the conversion (responsible for facilitating the ratios).
+        type: string
+        enum: [VISA, MASTERCARD]
+        (enumDescription):
+          - VISA: Visa.
+          - MASTERCARD: Mastercard.
+        required: false
+        example: VISA
+    responses:
+      200:
+        description: OK
+        body:
+          application/json:
+            examples:
+              basic:
+                value: !include examples/exchange-rates/get_200.json
+                description: Basic view JSON output example
+                displayName: JSON output example for the basic call GET /exchange-rates
+            type: object
+            properties:
+              data:
+                type: exchangeRates.exchangeRates
+      400:
+        description: Bad request.
+        body:
+          application/json:
+            type: errors
+            examples:
+              inputParamNotValidated:
+                value: !include examples/exchange-rates/get_400_inputParamNotValidated.json
+                description: Example of JSON output when input param has not been validated as expected.
+                displayName: JSON for input param has not been validated as expected.
+              noAvailableRate:
+                value: !include examples/exchange-rates/get_400_noAvailableRate.json
+                description: Example of JSON output when No rates available for provided currency.
+                displayName: JSON for No rates available for provided currency.
+  post:
+    description: |
+      It allows to convert a specific amount in base currency to a currency or several target currencies, taking into account the cost of the exchange and the possible fees involved in different currencies.
+
+    body:
+      application/json:
+        example: !include examples/exchange-rates/simulate/post_request.json
+        type: createExchangeRate.createExchangeRate
+      responses:
+        201:
+          description: Ok
+          body:
+            application/json:
+              example: !include examples/exchange-rates/post_200.json
+              type: object
+              properties:
+                data:
+                  type: createExchangeRate.createExchangeRate
+  /{exchange-rate-id}:
+    description: |
+      Resource to manage a exchange rate.
+    uriParameters:
+      exchange-rate-id:
+        description: Unique identifier of the exchange rate
+        type: Integer
+        exchange: 1
+    get:
+      description: |
+        It allows obtaining information on an exchange rate.
+      responses:
+        200:
+          description: Ok
+          body:
+            application/json:
+              example: !include examples/exchange-rates/exchange-rate-id/get_200.json
+              type: object
+              properties:
+                data:
+                  type: createExchangeRate.createExchangeRate
+
+/simulate:
+  description: |
+    It allows to simulate the conversion of a specific amount in base currency of a product to a currency or several target currencies, taking into account the cost of the exchange and the possible fees involved.
+  type: consulting-post
+
+  post:
+    description: |
+      It allows to convert a specific amount in base currency to a currency or several target currencies, taking into account the cost of the exchange and the possible fees involved in different currencies.
+
+    body:
+      application/json:
+        example: !include examples/simulate/post_request.json
+        type: exchangeRateSimulate.exchangeRateSimulate
+    responses:
+      200:
+        description: Ok
+        body:
+          application/json:
+            example: !include examples/simulate/post_200.json
+            type: object
+            properties:
+              data:
+                type: exchangeRateSimulate.exchangeRateSimulate
+      400:
+        description: Bad request.
+        body:
+          application/json:
+            type: errors
+            examples:
+              invalidParameters:
+                value: !include examples/simulate/post_400_invalidParameters.json
+                description: JSON output example for wrong informed contact format
+                displayName: JSON example invalidParameters
+              mandatoryParametersMissing:
+                value: !include examples/simulate/post_400_mandatoryParametersMissing.json
+                description: JSON output example for request with mandatory parameters missing.
+                displayName: JSON for request with mandatory parameters missing
